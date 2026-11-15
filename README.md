@@ -18,9 +18,19 @@ dev-obsidian-base/
 │       ├── 01_Core_Rules/           # [L1] 시스템 아키텍처, ERD, 코딩 표준
 │       ├── 02_Specs_and_Skills/     # [L2] 도메인별 상세 기능 스펙 (REQ-nnn)
 │       └── 04_ADR_and_Logs/         # [L3] 아키텍처 결정 기록(DEC-nnn) & 트러블슈팅(ERR-nnn)
-├── 20_Knowledge_Base/               # 프로젝트 공통 기술 노트 (PostgreSQL, pgvector, Redis, Spring AI 등)
-└── 90_Templates/                    # 새 문서 작성용 표준 템플릿 4종
+├── 20_Knowledge_Base/               # 프로젝트 공통 기술 노트 (카테고리별 분리)
+│   ├── knowledge_moc.md             # 기술 지식 베이스 목차
+│   ├── Backend_Spring/
+│   ├── DB_Redis/
+│   ├── AI_RAG/
+│   └── Frontend_Nuxt/
+├── 30_Agent_Playbooks/              # 공용 AI 에이전트 감사 체크리스트 & 세션 SOP
+│   ├── gate1_plan_auditor.md
+│   ├── gate2_code_reviewer.md
+│   └── session_handoff_sop.md
+└── 90_Templates/                    # 새 문서 작성용 표준 템플릿 5종
     ├── active_context_template.md
+    ├── plan_template.md
     ├── spec_template.md
     ├── decision_template.md
     └── troubleshooting_template.md
