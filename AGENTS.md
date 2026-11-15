@@ -1,0 +1,24 @@
+---
+description: 공용 옵시디언 볼트의 문서 작성 표준 및 AI 에이전트 열람·갱신 규칙 (SSOT).
+layer: L0
+---
+
+# AGENTS.md — Obsidian Vault Standards
+
+## 1. 핵심 원칙
+- **Progressive Disclosure**: 세션 시작 시 모든 `.md`를 읽지 말고, 대상 프로젝트의 `activeContext.md`와 `00_MOC/`를 먼저 확인한 뒤 필요한 L1/L2 문서만 선택 열람한다.
+- **범위 격리**: 특정 프로젝트(`10_Projects/<project>/`) 작업 시, 명시적 요청 없이 다른 프로젝트 폴더를 수정하지 않는다.
+
+## 2. 계층 구조 (L0 ~ L3)
+- **L0 (`00_MOC/`)**: 프로젝트 전체 목차 및 라우팅 지도
+- **L0.5 (`activeContext.md`)**: 현재 진행 중인 작업, 방금 끝낸 일, 다음 할 일 (**항상 50줄 이내 덮어쓰기**)
+- **L1 (`01_Core_Rules/`)**: 시스템 아키텍처, ERD, 코딩 표준
+- **L2 (`02_Specs_and_Skills/`)**: 도메인별 상세 스펙 (`REQ-nnn`)
+- **L3 (`04_ADR_and_Logs/`)**: 아키텍처 결정 기록(`DEC-nnn`) 및 트러블슈팅(`ERR-nnn`) — 조건부 열람 및 누적 기록(Append)
+
+## 3. 문서 작성 5대 표준
+1. **최소 YAML Frontmatter**: `description`(열람 조건), `layer`, `related`만 작성한다.
+2. **상대 경로 마크다운 링크**: `[[문서]]` 대신 `[문서](./file_name.md)` 형식을 사용한다.
+3. **고유 ID 부여**: 요구사항(`REQ-001`), 결정(`DEC-001`), 트러블슈팅(`ERR-001`)에 ID를 부여해 `grep -n` 발췌가 가능하게 한다.
+4. **파일명 규칙**: 영문 `snake_case.md`로 통일한다 (공백·이모지 금지).
+5. **Atomic Note**: 하나의 파일에 하나의 도메인/주제만 담고 `# H1 -> ## H2 -> ### H3` 계층을 유지한다.

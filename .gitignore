@@ -1,0 +1,10 @@
+# Obsidian workspace & cache (prevents merge conflicts across devices)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
