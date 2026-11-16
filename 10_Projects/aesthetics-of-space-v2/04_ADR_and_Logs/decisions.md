@@ -18,3 +18,17 @@ layer: L3
 - **배경 (Context)**: `server`와 `web` 레포를 분리하면서 문서와 AI 에이전트 컨텍스트를 일관되게 공유해야 함.
 - **결정 (Decision)**: 공용 볼트(`dev-obsidian-base`, Private) 1개와 개인 계정 아래 `server` / `web` 레포 2개(Public)를 분리 운영함.
 - **이유 및 트레이드오프 (Rationale)**: 원본 팀 Org 레포는 Before 레퍼런스로 보존하고, 개인 레포로 1인 설계·구축 기여도를 명확히 분리함.
+
+### DEC-003: PostgreSQL 16 + pgvector 단일 DB 채택
+- **날짜**: 2026-11-16
+- **상태**: Accepted
+- **배경 (Context)**: AI RAG 통합 검색을 위해 RDB 메타데이터 필터링과 벡터 유사도 검색을 저비용 환경에서 안정적으로 결합해야 함.
+- **결정 (Decision)**: 기존 MariaDB 대신 PostgreSQL 16 + `pgvector`(HNSW 인덱스) 단일 DB 구조를 채택함.
+- **이유 및 트레이드오프 (Rationale)**: 별도 Vector DB 컨테이너 운영·동기화 비용을 제거하고, 단일 SQL 트랜잭션에서 Pre-filtering + 벡터 검색을 수행할 수 있음.
+
+### DEC-004: 주간 콘테스트 회차당 1인 1표 정책
+- **날짜**: 2026-11-16
+- **상태**: Accepted
+- **배경 (Context)**: 주간 콘테스트 투표의 공정성 기준과 `contest_vote` 테이블의 Unique 제약 조건을 확정해야 함.
+- **결정 (Decision)**: 한 콘테스트 회차(`contest_round`) 내에서 사용자당 1개의 출품작에만 투표(`UNIQUE (round_id, user_id)`)할 수 있도록 제한함.
+- **이유 및 트레이드오프 (Rationale)**: 중복·어뷰징 투표를 DB 제약과 동시성 제어로 명확히 방어하며, 실시간 랭킹 경쟁의 긴장감을 높임.

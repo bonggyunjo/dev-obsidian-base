@@ -12,6 +12,7 @@ related:
 
 ## L1 핵심 규칙 및 아키텍처
 - [system_architecture.md](../01_Core_Rules/system_architecture.md)
+- [erd_schema.md](../01_Core_Rules/erd_schema.md)
 
 ## L2 도메인 스펙 (`02_Specs_and_Skills/`)
 - *(설계 확정 후 도메인별 `*_spec.md` 추가 예정)*
