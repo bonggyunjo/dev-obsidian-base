@@ -5,7 +5,7 @@ related:
   - ./00_MOC/project_moc.md
 ---
 
-# Active Context — Roomora (aesthetics-of-space-v2)
+# Active Context — Roomora
 
 ## 현재 단계
 - **설계 단계 (Architect)**: L1 DB/ERD 설계 완료 → L2 도메인 스펙 작성 차례

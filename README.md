@@ -12,7 +12,7 @@ dev-obsidian-base/
 ├── README.md                        # 볼트 전체 안내 및 사용 가이드
 ├── 00_Inbox/                        # 정제 전 임시 메모, 아이디어 스케치
 ├── 10_Projects/                     # 프로젝트별 독립 문서 공간
-│   └── aesthetics-of-space-v2/      # 현재 진행 중인 프로젝트
+│   └── roomora/                     # 현재 진행 중인 프로젝트
 │       ├── activeContext.md         # [L0.5] 현재 작업 상태 & 다음 할 일 (50줄 이내 덮어쓰기)
 │       ├── 00_MOC/                  # [L0] 프로젝트 문서 목차 (Map of Content)
 │       ├── 01_Core_Rules/           # [L1] 시스템 아키텍처, ERD, 코딩 표준
@@ -48,7 +48,7 @@ dev-obsidian-base/
 
 ## 2. 관리 중인 프로젝트
 
-- **[aesthetics-of-space-v2](./10_Projects/aesthetics-of-space-v2/00_MOC/project_moc.md)**: 학부 캡스톤(`The-Aesthetics-Of-Space-Project`)을 재설계한 **조건 기반 인테리어 레시피 · 주간 콘테스트 · AI RAG 통합 검색 플랫폼**
+- **[roomora](./10_Projects/roomora/00_MOC/project_moc.md)**: 학부 캡스톤(`The-Aesthetics-Of-Space-Project`)을 재설계한 **조건 기반 인테리어 레시피 · 주간 콘테스트 · AI RAG 통합 검색 플랫폼**
 
 ---
 

@@ -1,11 +1,11 @@
 ---
-description: aesthetics-of-space-v2 프로젝트 전체 문서 목차 및 라우팅 지도.
+description: roomora 프로젝트 전체 문서 목차 및 라우팅 지도.
 layer: L0
 related:
   - ../activeContext.md
 ---
 
-# Project MOC — aesthetics-of-space-v2
+# Project MOC — Roomora
 
 ## L0.5 현재 상태
 - [activeContext.md](../activeContext.md)

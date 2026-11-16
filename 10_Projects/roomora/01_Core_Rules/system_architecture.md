@@ -1,12 +1,12 @@
 ---
-description: aesthetics-of-space-v2 전체 시스템 아키텍처 및 기술 스택 기준서.
+description: roomora 전체 시스템 아키텍처 및 기술 스택 기준서.
 layer: L1
 related:
   - ../00_MOC/project_moc.md
   - ../04_ADR_and_Logs/decisions.md
 ---
 
-# System Architecture — aesthetics-of-space-v2
+# System Architecture — Roomora
 
 ## 1. 프로젝트 개요
 - **주제**: 조건 기반 인테리어 레시피 · 주간 콘테스트 · AI RAG 통합 검색 플랫폼
