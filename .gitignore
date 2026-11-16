@@ -4,6 +4,12 @@
 .obsidian/cache
 .trash/
 
+# Secrets (in case sensitive files are accidentally placed in vault)
+.env
+.env.*
+*.pem
+*.key
+
 # OS generated files
 .DS_Store
 Thumbs.db
