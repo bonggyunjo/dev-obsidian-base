@@ -32,3 +32,10 @@ layer: L3
 - **배경 (Context)**: 주간 콘테스트 투표의 공정성 기준과 `contest_vote` 테이블의 Unique 제약 조건을 확정해야 함.
 - **결정 (Decision)**: 한 콘테스트 회차(`contest_round`) 내에서 사용자당 1개의 출품작에만 투표(`UNIQUE (round_id, user_id)`)할 수 있도록 제한함.
 - **이유 및 트레이드오프 (Rationale)**: 중복·어뷰징 투표를 DB 제약과 동시성 제어로 명확히 방어하며, 실시간 랭킹 경쟁의 긴장감을 높임.
+
+### DEC-005: GitHub Actions CI 우선 적용 및 배포처 확정 후 CD 확장
+- **날짜**: 2026-11-17
+- **상태**: Accepted
+- **배경 (Context)**: AI 에이전트 기반 개발 시 코드 품질·보안·빌드 안정성을 자동으로 검증할 안전망이 필요함.
+- **결정 (Decision)**: `roomora-server` / `roomora-web`에 빌드·테스트(Postgres/Redis 연동)·타입체크/린트·Gitleaks 시크릿 스캔·캐싱/concurrency가 포함된 CI를 우선 적용하고, CD는 배포 플랫폼 확정 시 연결함.
+- **이유 및 트레이드오프 (Rationale)**: Public 레포 무료 GitHub Actions로 비용 없이 회귀 버그와 시크릿 유출을 차단함.

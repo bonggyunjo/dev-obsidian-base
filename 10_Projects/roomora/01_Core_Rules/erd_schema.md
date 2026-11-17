@@ -8,7 +8,7 @@ related:
 
 # To-Be ERD & Index Schema (PostgreSQL 16 + pgvector)
 
-> **확정 정책**: `DEC-003` (PostgreSQL 16 + pgvector 단일 DB), `DEC-004` (콘테스트 회차당 1인 1표)
+> **확정 정책**: `DEC-003` (PostgreSQL 16 + pgvector 단일 DB), `DEC-004` (콘테스트 회차당 1인 1표), **총 18개 테이블**
 
 ---
 
@@ -30,6 +30,7 @@ erDiagram
 
     contest_round ||--o{ contest_post : "includes"
     contest_round ||--o{ contest_vote : "restricts_one_per_user"
+    contest_post ||--o{ contest_image : "has"
     contest_post ||--o{ contest_vote : "receives"
     contest_post ||--o{ contest_scrap : "saved_in"
     contest_post ||--o{ contest_comment : "has"
@@ -49,7 +50,7 @@ erDiagram
 | `id` | `BIGSERIAL` | `PK` | 회원 ID |
 | `email` | `VARCHAR(100)` | `NOT NULL` | 이메일 |
 | `password` | `VARCHAR(255)` | `NULL` | BCrypt 해시 (소셜 가입 시 NULL) |
-| `nickname` | `VARCHAR(30)` | `NOT NULL, UNIQUE` | 닉네임 |
+| `nickname` | `VARCHAR(30)` | `NOT NULL` | 닉네임 (Partial Unique로 관리) |
 | `profile_image_url` | `VARCHAR(500)` | `NULL` | 프로필 이미지 URL |
 | `bio` | `VARCHAR(200)` | `NULL` | 한줄 소개 |
 | `provider` | `VARCHAR(20)` | `NOT NULL` | `LOCAL`, `KAKAO`, `GOOGLE` |
@@ -60,9 +61,10 @@ erDiagram
 | `deleted_at` | `TIMESTAMPTZ` | `NULL` | Soft Delete |
 | `created_at` / `updated_at` | `TIMESTAMPTZ` | `NOT NULL` | 생성/수정 일시 |
 
-- **인덱스**:
-  - `UNIQUE (email, provider)` — 동일 이메일의 로컬/소셜 구분 또는 통합 정책 지원
-  - `UNIQUE (provider, provider_id) WHERE provider_id IS NOT NULL` — OAuth2 로그인 고속 조회
+- **인덱스 (Soft Delete 재가입 허용을 위한 Partial Unique Index 적용)**:
+  - `UNIQUE (nickname) WHERE deleted_at IS NULL` — 탈퇴 회원 닉네임 재사용 허용
+  - `UNIQUE (email, provider) WHERE deleted_at IS NULL` — 탈퇴 후 동일 계정 재가입 허용
+  - `UNIQUE (provider, provider_id) WHERE provider_id IS NOT NULL AND deleted_at IS NULL` — OAuth2 로그인 고속 조회
 
 #### `user_follow`
 - **컬럼**: `id (PK)`, `follower_id (FK -> users.id)`, `following_id (FK -> users.id)`, `created_at`
@@ -120,10 +122,14 @@ erDiagram
 - 컬럼: `id (PK)`, `round_no (UNIQUE)`, `title`, `theme_description`, `status` (`UPCOMING` / `ACTIVE` / `CLOSED`), `start_at`, `end_at`, `created_at`
 
 #### `contest_post`
-- 컬럼: `id (PK)`, `round_id (FK)`, `user_id (FK)`, `title`, `content`, `thumbnail_url`, `vote_count (DEFAULT 0)`, `scrap_count (DEFAULT 0)`, `final_rank (NULL)`, `created_at`
+- 컬럼: `id (PK)`, `round_id (FK)`, `user_id (FK)`, `title`, `content`, `thumbnail_url`, `vote_count (DEFAULT 0)`, `scrap_count (DEFAULT 0)`, `final_rank (NULL)`, `deleted_at`, `created_at`, `updated_at`
 - **제약/인덱스**:
-  - `UNIQUE (round_id, user_id)` — 회차당 1인 1출품 제한
-  - `INDEX (round_id, vote_count DESC)` — 마감 후 랭킹/명예의 전당 조회
+  - `UNIQUE (round_id, user_id) WHERE deleted_at IS NULL` — 회차당 1인 1출품 제한
+  - `INDEX (round_id, vote_count DESC) WHERE deleted_at IS NULL` — 마감 후 랭킹/명예의 전당 조회
+
+#### `contest_image`
+- 컬럼: `id (PK)`, `contest_post_id (FK -> contest_post.id)`, `image_url`, `sort_order`
+- **인덱스**: `INDEX (contest_post_id, sort_order ASC)` — 출품작 다중 이미지 순서 조회
 
 #### `contest_vote`
 - 컬럼: `id (PK)`, `round_id (FK)`, `contest_post_id (FK)`, `user_id (FK)`, `created_at`
@@ -139,6 +145,7 @@ erDiagram
 
 #### `contest_comment`
 - 컬럼: `id (PK)`, `contest_post_id (FK)`, `user_id (FK)`, `parent_id (NULL)`, `content`, `deleted_at`, `created_at`
+- **인덱스**: `INDEX (contest_post_id, parent_id, created_at ASC)`
 
 ---
 
@@ -161,6 +168,8 @@ erDiagram
 
 - **튜닝 인덱스**:
   - `CREATE INDEX idx_rag_chunk_embedding_hnsw ON rag_document_chunk USING hnsw (embedding vector_cosine_ops);`
+  - `CREATE INDEX idx_rag_chunk_content_trgm ON rag_document_chunk USING gin (content gin_trgm_ops);` — Hybrid Search 한국어 키워드 검색용 (`pg_trgm`)
+  - `UNIQUE (source_type, source_id, chunk_index)` — 비동기 재임베딩 멱등성(중복 적재 방지) 보장
   - `INDEX (source_type, source_id)` — 원본 수정/삭제 시 기존 청크 일괄 삭제·갱신 고속화
   - `GIN INDEX (metadata)` — JSONB 메타데이터 필터링 보조
 
