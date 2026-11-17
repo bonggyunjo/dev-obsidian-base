@@ -14,6 +14,7 @@ related:
 - [system_architecture.md](../01_Core_Rules/system_architecture.md)
 - [erd_schema.md](../01_Core_Rules/erd_schema.md)
 - [test_strategy.md](../01_Core_Rules/test_strategy.md)
+- [domain_flow.md](../01_Core_Rules/domain_flow.md)
 
 ## L2 도메인 스펙 (`02_Specs_and_Skills/`)
 - *(설계 확정 후 도메인별 `*_spec.md` 추가 예정)*
