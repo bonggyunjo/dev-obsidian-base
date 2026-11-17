@@ -26,6 +26,7 @@ dev-obsidian-base/
 │   └── Frontend_Nuxt/
 ├── 30_Agent_Playbooks/              # 공용 AI 에이전트 감사 체크리스트 & 세션 SOP
 │   ├── gate1_plan_auditor.md
+│   ├── qa_test_agent.md
 │   ├── gate2_code_reviewer.md
 │   └── session_handoff_sop.md
 └── 90_Templates/                    # 새 문서 작성용 표준 템플릿 5종
