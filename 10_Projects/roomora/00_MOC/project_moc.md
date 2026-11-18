@@ -17,7 +17,12 @@ related:
 - [domain_flow.md](../01_Core_Rules/domain_flow.md)
 
 ## L2 도메인 스펙 (`02_Specs_and_Skills/`)
-- *(설계 확정 후 도메인별 `*_spec.md` 추가 예정)*
+- [auth_oauth_spec.md](../02_Specs_and_Skills/auth_oauth_spec.md)
+- [recipe_community_spec.md](../02_Specs_and_Skills/recipe_community_spec.md)
+- [contest_ranking_spec.md](../02_Specs_and_Skills/contest_ranking_spec.md)
+- [rag_search_spec.md](../02_Specs_and_Skills/rag_search_spec.md)
+- [checklist_spec.md](../02_Specs_and_Skills/checklist_spec.md)
+- [mypage_social_spec.md](../02_Specs_and_Skills/mypage_social_spec.md)
 
 ## L3 의사결정 및 트러블슈팅
 - [decisions.md](../04_ADR_and_Logs/decisions.md)
