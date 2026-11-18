@@ -5,4 +5,9 @@ layer: L3
 
 # Troubleshooting Log
 
-*(구현 및 테스트 진행 시 `90_Templates/troubleshooting_template.md` 형식으로 기록)*
+### ERR-001: Windows 로컬 PostgreSQL 5432 포트 충돌로 인한 Flyway 인증 실패
+- **날짜**: 2026-11-18
+- **증상**: Docker `roomora-postgres`가 기동 중인데도 `host.docker.internal:5432` 연결 시 `role "roomora" does not exist` (SQL State `28000`) 발생
+- **원인 (Root Cause)**: Windows 호스트에 이미 설치된 로컬 PostgreSQL 서비스가 `5432` 포트를 점유하고 있어 Docker 컨테이너가 아닌 호스트 DB로 라우팅됨
+- **해결 방법**: 테스트 실행 시 Docker 내부 네트워크(`--network roomora-server_default`)로 `roomora-postgres:5432`에 직접 연결해 해결
+- **재발 방지**: 추후 호스트(IntelliJ)에서 직접 실행 시 `docker-compose.yml` 호스트 포트를 `5433:5432`로 매핑하거나 Windows PostgreSQL 서비스를 중지한다.

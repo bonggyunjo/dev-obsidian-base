@@ -8,19 +8,17 @@ related:
 # Active Context — Roomora
 
 ## 현재 단계
-- **설계 완료 → 구현 1단계 진입**: L1(4종) + L2(6대 도메인 스펙) 작성 완료
+- **백엔드 구현 진행 중**: 마일스톤 1(DDL/Docker) · 마일스톤 2(Auth & OAuth2) 완료 및 테스트 통과
 
 ## 방금 완료한 일
-- **L2 도메인 스펙 6종 작성 완료** (`02_Specs_and_Skills/`):
-  - `auth_oauth_spec`, `recipe_community_spec`, `contest_ranking_spec`, `rag_search_spec`, `checklist_spec`, `mypage_social_spec`
-- [project_moc.md](./00_MOC/project_moc.md)에 L2 스펙 전체 라우팅 연결
+- `docker-compose.yml` (`pgvector/pgvector:pg16` + `redis:7-alpine`) + `V1__init.sql` (18개 테이블) + `FlywayMigrationTest` 통과
+- **Auth & OAuth2 구현 및 통합 테스트 통과** (`AuthIntegrationTest` 4건 + `SmokeTest` + `FlywayMigrationTest`)
+- `ERR-001` (Windows 5432 포트 충돌) [troubleshooting.md](./04_ADR_and_Logs/troubleshooting.md) 기록
 
 ## 다음 할 일 (Next)
-1. **`roomora-server` 인프라 & Flyway V1 DDL 구축**:
-   - 로컬 Docker Compose (`pgvector/pgvector:pg16` + `redis:7`) 구성
-   - `erd_schema.md` 기반 `V1__init.sql` (18개 테이블 + 인덱스) 작성
-2. **도메인 순차 구현 (Plan → Gate 1 → Code → QA Agent → Gate 2)**:
-   - 1순위: Auth & OAuth2 (`auth_oauth_spec.md`)
+1. **마일스톤 3: Recipe & Community 도메인 구현** (`recipe_community_spec.md` 기반 CRUD, 조건 필터 + Keyset 페이징, 좋아요/스크랩, 2-Depth 대댓글, `AFTER_COMMIT` 이벤트)
+2. **마일스톤 4: Contest & Ranking 구현** (회차당 1표 동시성 제어, Redis ZSET 랭킹, 마감 배치)
+3. **마일스톤 5: AI RAG 통합 검색 & Checklist 구현**
 
 ## 미결정 / 주의사항
-- `roomora-server` 로컬 Java 17/JDK 및 Docker 실행 환경 확인 필요
+- `roomora-server` IntelliJ 호스트 실행 시 `5432` 포트 충돌 주의 (`ERR-001`)
