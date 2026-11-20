@@ -39,3 +39,10 @@ layer: L3
 - **배경 (Context)**: AI 에이전트 기반 개발 시 코드 품질·보안·빌드 안정성을 자동으로 검증할 안전망이 필요함.
 - **결정 (Decision)**: `roomora-server` / `roomora-web`에 빌드·테스트(Postgres/Redis 연동)·타입체크/린트·Gitleaks 시크릿 스캔·캐싱/concurrency가 포함된 CI를 우선 적용하고, CD는 배포 플랫폼 확정 시 연결함.
 - **이유 및 트레이드오프 (Rationale)**: Public 레포 무료 GitHub Actions로 비용 없이 회귀 버그와 시크릿 유출을 차단함.
+
+### DEC-006: AI 특유 카피 배제 및 에디토리얼 매거진 UI 시스템 표준화
+- **날짜**: 2026-11-20
+- **상태**: Accepted
+- **배경 (Context)**: 1차 구현된 `roomora-web` 화면에서 개발자/AI 용어("RAG", "Citations", "1-Click") 노출과 박스 위주 레이아웃으로 인해 서비스 매력도가 떨어지는 문제 확인.
+- **결정 (Decision)**: `01_Core_Rules/ui_design_system.md`를 L1 표준으로 제정해 일상 한국어 카피, 웜 아이보리+차콜 팔레트, 사진 중심 `4:3` 카드, 인터랙티브 조건 탐색 UI로 전면 개편함.
+- **이유 및 트레이드오프 (Rationale)**: 사용자가 3초 안에 서비스 효용을 체감하도록 비주얼과 언어 톤을 실제 라이프스타일 서비스 수준으로 맞춤.

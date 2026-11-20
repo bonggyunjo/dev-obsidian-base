@@ -15,6 +15,7 @@ related:
 - [erd_schema.md](../01_Core_Rules/erd_schema.md)
 - [test_strategy.md](../01_Core_Rules/test_strategy.md)
 - [domain_flow.md](../01_Core_Rules/domain_flow.md)
+- [ui_design_system.md](../01_Core_Rules/ui_design_system.md)
 
 ## L2 도메인 스펙 (`02_Specs_and_Skills/`)
 - [auth_oauth_spec.md](../02_Specs_and_Skills/auth_oauth_spec.md)
