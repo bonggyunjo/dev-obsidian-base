@@ -22,13 +22,13 @@ related:
 - `POST /api/auth/login` — `{ email, password }` → `{ accessToken, refreshToken, user }`
 - `POST /api/auth/reissue` — `{ refreshToken }` → `{ accessToken, refreshToken }` (기존 RT 즉시 폐기)
 - `POST /api/auth/logout` — Access Token 블랙리스트 등록 + Redis Refresh Token 삭제
-- `GET /oauth2/authorization/{kakao|google}` → 콜백 처리 후 `{ accessToken, refreshToken, needsOnboarding }`
+- `GET /oauth2/authorization/{kakao|google}` → 콜백 처리 후 `OAUTH2_REDIRECT_URI`(기본 `http://localhost:3000/auth/callback`)로 `?accessToken=...&refreshToken=...&needsOnboarding=true|false` (실패 시 `?error=...`) 리다이렉트
 - `PATCH /api/auth/onboarding` — 소셜 최초 가입자 `{ nickname }` 설정 완료
 
 ## 3. 예외 처리 및 엣지 케이스
 - 이미 사용 중인 Refresh Token이 재요청되면 탈취로 간주해 해당 유저의 Redis Refresh Token 전체를 즉시 삭제하고 `401 Unauthorized`를 반환한다.
 - 탈퇴한 유저(`deleted_at IS NOT NULL`)의 로그인 시도는 `401`로 차단하고, 신규 가입 시에만 새 row로 생성한다.
-- 소셜 가입자가 비밀번호 변경 API 호출 시 `400 Bad Request` (`LOCAL` 계정 전용)를 반환한다.
+- 소셜 전용 계정이 일반 이메일/비밀번호 로그인을 시도하면 차단되며, 비밀번호 변경 전용 API는 향후 확장 범위로 남겨둔 상태다.
 
 ## 4. 검증 기준 (DoD)
 - 비인증(401)·타인 접근(403) 보안 테스트 통과

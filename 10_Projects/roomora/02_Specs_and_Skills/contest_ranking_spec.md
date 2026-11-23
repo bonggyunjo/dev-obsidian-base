@@ -14,7 +14,7 @@ related:
 - **REQ-CNT-002**: 사용자는 `ACTIVE` 회차당 **1개의 출품작**(`UNIQUE (round_id, user_id) WHERE deleted_at IS NULL`)만 등록할 수 있으며 다중 이미지(`contest_image`)를 첨부한다.
 - **REQ-CNT-003**: **`DEC-004` 회차당 1인 1표** 정책에 따라 `contest_vote`에 `UNIQUE (round_id, user_id)`를 적용하고 동시 요청 정합성을 보장한다.
 - **REQ-CNT-004**: 실시간 랭킹 Top N 조회는 DB `ORDER BY` 대신 **Redis ZSET** (`contest:ranking:{roundId}`)을 사용한다.
-- **REQ-CNT-005**: 투표와 별개로 출품작 북마크(`contest_scrap`) 및 2-Depth 댓글(`contest_comment`)을 지원한다.
+- **REQ-CNT-005**: 투표와 별개로 출품작 북마크(`contest_scrap`) 및 2-Depth 댓글(`contest_comment`)을 지원하며, 출품·수정·삭제 커밋 후(`AFTER_COMMIT`) `CONTEST` 도메인 RAG 색인을 동기화한다.
 - **REQ-CNT-006**: 회차 종료 시각 도달 시 스케줄러가 상태를 `CLOSED`로 전환하고 Redis ZSET 최종 순위를 `contest_post.final_rank`에 확정 저장한다.
 
 ## 2. API / 데이터 계약

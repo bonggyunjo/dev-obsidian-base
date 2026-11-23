@@ -11,8 +11,8 @@ related:
 
 ## 1. 요구사항 (REQ)
 - **REQ-RCP-001**: 레시피 작성 시 구조화 메타데이터(`housing_type`, `area_pyeong`, `contract_type`, `is_no_drill`, `budget`, `style_tag`), 다중 이미지(`recipe_image`), 투입 품목(`recipe_item`)을 함께 저장한다.
-- **REQ-RCP-002**: 이미지 업로드는 서버 로컬 저장이 아닌 S3/R2 **Presigned URL** 방식을 사용한다.
-- **REQ-RCP-003**: 목록 조회는 복합 조건 필터링 + 정렬(최신/좋아요/스크랩/예산순) + **Keyset(No-Offset) 페이징**을 지원한다.
+- **REQ-RCP-002**: 이미지 업로드는 S3/R2 **Presigned URL** API(`POST /api/uploads/presigned-url`)를 제공하며, 로컬 개발/웹 폼에서는 외부 이미지 URL 직접 입력도 함께 지원한다.
+- **REQ-RCP-003**: 목록 조회는 복합 조건 필터링 + 정렬(`LATEST`/`LIKES`/`SCRAPS`/`BUDGET_ASC`) + 전 정렬 기준 **Keyset(No-Offset) 페이징**(`lastId` 커서)을 지원한다.
 - **REQ-RCP-004**: 좋아요(`recipe_like`)와 북마크(`recipe_scrap`)는 `(post_id, user_id)` Unique 제약으로 중복을 방지하고 토글 시 카운트를 동기화한다.
 - **REQ-RCP-005**: 댓글(`recipe_comment`)은 2-Depth 대댓글까지 지원하며 작성자 본인만 수정·삭제할 수 있다.
 - **REQ-RCP-006**: 레시피 생성·수정·삭제 커밋 후(`AFTER_COMMIT`) 비동기 이벤트로 `rag_document_chunk` 색인/갱신/삭제를 트리거한다.

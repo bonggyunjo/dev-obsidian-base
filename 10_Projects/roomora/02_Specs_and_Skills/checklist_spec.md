@@ -19,8 +19,10 @@ related:
 - `POST /api/checklists` — `{ title, querySummary, targetBudget, housingType, isNoDrill, items: [{ stepOrder, category, content, estimatedCost }] }` → `201 Created`
 - `GET /api/checklists` — 내 체크리스트 목록 + 진행률(`completedCount`, `totalCount`, `progressPercent`)
 - `GET /api/checklists/{id}` — 체크리스트 상세 및 `step_order ASC` 정렬된 항목 목록
+- `POST /api/checklists/{id}/items` — `{ stepOrder?, category, content, estimatedCost }` 항목 추가 → `201 Created`
 - `PATCH /api/checklists/{id}/items/{itemId}` — `{ isChecked?, memo?, content?, estimatedCost? }`
-- `DELETE /api/checklists/{id}`
+- `DELETE /api/checklists/{id}/items/{itemId}` — 항목 삭제
+- `DELETE /api/checklists/{id}` — 체크리스트 삭제
 
 ## 3. 예외 처리 및 엣지 케이스
 - 타인의 체크리스트 ID로 조회·수정·삭제 요청 시 `403 Forbidden` 반환.

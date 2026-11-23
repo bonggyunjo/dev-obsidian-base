@@ -10,12 +10,12 @@ related:
 # AI RAG 통합 검색 기능 명세서
 
 ## 1. 요구사항 (REQ)
-- **REQ-RAG-001**: 레시피·가이드·콘테스트 우수작 커밋 후(`AFTER_COMMIT`) 메타데이터 Prefix(`[주거형태 | 평수 | 계약 | 무타공 | 예산]`)를 포함한 청크를 생성해 임베딩 후 `rag_document_chunk`에 멱등 Upsert(`UNIQUE(source_type, source_id, chunk_index)`)한다.
+- **REQ-RAG-001**: 레시피·가이드·콘테스트 출품작 커밋 후(`AFTER_COMMIT`) 메타데이터 Prefix(`[주거형태 | 평수 | 계약 | 무타공 | 예산 | 스타일]` / `[가이드 | 카테고리 | 스타일]` / `[콘테스트 | Round N | 제목]`)를 포함한 청크를 생성해 임베딩 후 `rag_document_chunk`에 멱등 Upsert(`UNIQUE(source_type, source_id, chunk_index)`)한다.
 - **REQ-RAG-002**: 검색 요청 시 Redis Rate Limit(일일 호출 제한) 및 질의 캐시를 먼저 확인한다.
 - **REQ-RAG-003**: 자연어 질의에서 정형 조건(예산/평수/무타공/주거형태)과 의미 검색어를 분리(Query Parsing)한다.
 - **REQ-RAG-004**: PostgreSQL 단일 DB에서 정형 조건 **Pre-filtering** 후 `pg_trgm` 키워드 + `pgvector` HNSW 코사인 유사도를 결합(Hybrid Search + RRF)해 Top-K 청크를 조회한다.
 - **REQ-RAG-005**: 검색된 `<document>` 컨텍스트만 기반으로 Structured JSON(맞춤 처방, 예산 배분표, 근거 Citation 목록, 체크리스트 초안, 주의 경고)을 생성한다.
-- **REQ-RAG-006**: 외부 LLM/임베딩 API 장애·타임아웃 시 **Resilience4j Circuit Breaker Fallback**으로 RDB 조건 필터 + 키워드 검색 결과를 `200 OK` (`fallback: true`)로 반환한다.
+- **REQ-RAG-006**: 외부 LLM/임베딩 API 장애·타임아웃 시 **Resilience4j Circuit Breaker Fallback**으로 RDB 조건 필터 + 키워드 검색 결과를 `200 OK` (`fallback: true`)로 반환하며, 임베딩 클라이언트는 키 미설정·장애 시 결정적 1536차원 로컬 벡터로 폴백해 색인 중단을 방지한다.
 
 ## 2. API / 데이터 계약
 - `POST /api/search/rag`
@@ -24,6 +24,7 @@ related:
     ```json
     {
       "fallback": false,
+      "relaxed": false,
       "summary": "맞춤 처방 요약...",
       "warnings": ["북향은 3000K 전구색 권장", "..."],
       "budgetBreakdown": [{ "category": "조명", "amount": 80000 }],
