@@ -6,13 +6,13 @@ layer: L0
 # Knowledge Base MOC
 
 ## 1. Backend & Spring
-- `./Backend_Spring/` — Spring Boot 3.x, Security, JWT/OAuth2, JPA/QueryDSL
+- [Spring AFTER_COMMIT & Security Invariants](./Backend_Spring/spring_after_commit_and_auth_principal.md) — 트랜잭션 분리, `@AuthenticationPrincipal`, Keyset 페이징
 
 ## 2. Database & Redis
-- `./DB_Redis/` — PostgreSQL, `pgvector` HNSW 튜닝, Redis ZSET, 분산 락
+- [Redis RT Rotation & ZSET Ranking](./DB_Redis/redis_rt_rotation_and_zset_ranking.md) — Refresh Token 탈취 탐지, Redis ZSET 실시간 랭킹
 
 ## 3. AI & RAG
-- `./AI_RAG/` — Chunking, Hybrid Search(RRF), Spring AI, Circuit Breaker Fallback
+- [pgvector Hybrid RRF & Resilience4j Fallback](./AI_RAG/pgvector_hybrid_rrf_resilience4j.md) — 단일 DB 하이브리드 검색, Circuit Breaker 및 임베딩 폴백
 
 ## 4. Frontend & Nuxt
-- `./Frontend_Nuxt/` — Nuxt 3 SSR, Pinia, Tailwind CSS, SEO/OG 메타태그
+- [Nuxt 3 Editorial UI & State Checklist](./Frontend_Nuxt/nuxt3_editorial_ui_patterns.md) — 에디토리얼 디자인 토큰, 4대 엣지 상태, SSR 가드

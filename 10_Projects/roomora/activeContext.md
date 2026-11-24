@@ -15,7 +15,8 @@ related:
 - **5단계 완료 — 성능 수치화 (`EXPLAIN ANALYZE` + `k6`)**: Keyset(0.060ms) vs Offset(12.021ms), HNSW(2.920ms), `k6` 68,697건 0% 에러 (Recipes P95 24.16ms, Contest ZSET P95 18.21ms, RAG Cache Hit P95 9.53ms) → [performance_benchmarks.md](./04_ADR_and_Logs/performance_benchmarks.md) 기록
 
 ## 다음 할 일 (Next)
-- 전체 변경분(`dev-obsidian-base` 등) Git 커밋·푸시 및 운영 환경 배포/OAuth2 실키 등록 준비
+1. **브라우저 실화면 E2E 점검 & UI/UX 다듬기**: `roomora-server` + `roomora-web` 동시 기동 후 레시피·대댓글·콘테스트 출품/투표·AI 검색→체크리스트 저장·팔로우 모달 실사용 흐름 및 반응형/마이크로 UX 보완
+2. **외부 Provider 실환경 연동**: 카카오·구글 OAuth2 실키(`.env`) 등록 후 소셜 로그인→온보딩 E2E 검증, S3/R2 Presigned URL 이미지 직접 업로드 연동
 
 ## 미결정 / 주의사항
 - `roomora-server` 호스트 실행 시 `5432` 포트 충돌 주의 (`ERR-001`)
